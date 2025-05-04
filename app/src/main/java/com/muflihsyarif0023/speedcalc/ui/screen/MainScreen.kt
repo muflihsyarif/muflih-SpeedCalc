@@ -1,5 +1,6 @@
 package com.muflihsyarif0023.speedcalc.ui.screen
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -57,18 +58,19 @@ fun MainScreen() {
     }
 }
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
     val options = listOf(
-        stringResource(id = R.string.s),  // Distance
-        stringResource(id = R.string.v),  // Speed
-        stringResource(id = R.string.t)   // Time
+        stringResource(id = R.string.s),
+        stringResource(id = R.string.v),
+        stringResource(id = R.string.t)
     )
     var selectedOption by remember { mutableStateOf(options[0]) }
     var firstInput by remember { mutableStateOf("") }
     var secondInput by remember { mutableStateOf("") }
     var result by remember { mutableStateOf<String?>(null) }
-    val resultTemplate = stringResource(id = R.string.result)
+
 
     val sLabel = stringResource(id = R.string.s)
     val vLabel = stringResource(id = R.string.v)
@@ -185,19 +187,24 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                 result = when (selectedOption) {
                     sLabel -> {
                         val hasil = first * second
-                        String.format(resultTemplate, hasil)
+                        val unit = "m"
+                        val formattedHasil = String.format("%.2f", hasil)
+                        "Result: $formattedHasil $unit"
                     }
 
                     vLabel -> {
                         val hasil = first / second
-                        String.format(resultTemplate, hasil)
+                        val unit = "m/s"
+                        val formattedHasil = String.format("%.2f", hasil)
+                        "Result: $formattedHasil $unit"
                     }
 
                     tLabel -> {
                         val hasil = first / second
-                        String.format(resultTemplate, hasil)
+                        val unit = "s"
+                        val formattedHasil = String.format("%.2f", hasil)
+                        "Result: $formattedHasil $unit"
                     }
-
                     else -> null
                 }
             },
