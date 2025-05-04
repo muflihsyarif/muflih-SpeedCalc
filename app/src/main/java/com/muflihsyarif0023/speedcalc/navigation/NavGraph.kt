@@ -1,7 +1,6 @@
 package com.muflihsyarif0023.speedcalc.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,7 +18,7 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
             MainScreen(navController)
         }
         composable(route = Screen.About.route) {
-            AboutScreen()
+            AboutScreen(navController)
         }
     }
 }
