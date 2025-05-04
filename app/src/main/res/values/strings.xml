@@ -5,9 +5,9 @@
         aplikasi menghitung menggunakan rumus fisika yaitu
         menghitung jarak dan waktu tempuh</string>
     <string name="choose">Choose Variabel</string>
-    <string name="s">Distance</string>
-    <string name="v">Speed</string>
-    <string name="t">Time</string>
+    <string name="s">Distance (S)</string>
+    <string name="v">Speed (V)</string>
+    <string name="t">Time (T)</string>
     <string name="distance">Enter Value S</string>
     <string name="speed">Enter Value V</string>
     <string name="time">Enter Value T</string>

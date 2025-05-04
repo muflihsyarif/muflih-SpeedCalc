@@ -150,7 +150,13 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             onValueChange = { firstInput = it },
             label = { Text(firstLabel) },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            trailingIcon = {
+                Text(
+                    text = getUnitFromLabel(firstLabel),
+                    style = MaterialTheme.typography.labelMedium
+                )
+            }
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -160,7 +166,13 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             onValueChange = { secondInput = it },
             label = { Text(secondLabel) },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            trailingIcon = {
+                Text(
+                    text = getUnitFromLabel(secondLabel),
+                    style = MaterialTheme.typography.labelMedium
+                )
+            }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -203,6 +215,16 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         }
+    }
+}
+
+@Composable
+fun getUnitFromLabel(label: String): String {
+    return when (label) {
+        stringResource(R.string.distance) -> "m"
+        stringResource(R.string.speed) -> "m/s"
+        stringResource(R.string.time) -> "s"
+        else -> ""
     }
 }
 
