@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -57,18 +58,26 @@ fun MainScreen() {
 }
 
 @Composable
-fun ScreenContent(modifier: Modifier = Modifier ) {
+fun ScreenContent(modifier: Modifier = Modifier) {
     val options = listOf(
-        stringResource(id = R.string.s),
-        stringResource(id = R.string.v),
-        stringResource(id = R.string.t)
+        stringResource(id = R.string.s),  // Distance
+        stringResource(id = R.string.v),  // Speed
+        stringResource(id = R.string.t)   // Time
     )
     var selectedOption by remember { mutableStateOf(options[0]) }
     var firstInput by remember { mutableStateOf("") }
     var secondInput by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf<String?>(null) }
+    val resultTemplate = stringResource(id = R.string.result)
+
+    val sLabel = stringResource(id = R.string.s)
+    val vLabel = stringResource(id = R.string.v)
+    val tLabel = stringResource(id = R.string.t)
 
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp)
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.intro),
@@ -88,77 +97,114 @@ fun ScreenContent(modifier: Modifier = Modifier ) {
                 )
                 .padding(8.dp)
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = stringResource(id = R.string.choose),
                     style = MaterialTheme.typography.labelLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
-                    options.forEach { option ->
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .selectable(
-                                    selected = (option == selectedOption),
-                                    onClick = {
-                                        selectedOption = option
-                                        firstInput = ""
-                                        secondInput = ""
-                                    }
-                                )
-                                .padding(vertical = 8.dp)
-                        ) {
-                            RadioButton(
+                options.forEach { option ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .selectable(
                                 selected = (option == selectedOption),
                                 onClick = {
                                     selectedOption = option
                                     firstInput = ""
                                     secondInput = ""
+                                    result = null
                                 }
                             )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = option)
-                        }
+                            .padding(vertical = 8.dp)
+                    ) {
+                        RadioButton(
+                            selected = (option == selectedOption),
+                            onClick = {
+                                selectedOption = option
+                                firstInput = ""
+                                secondInput = ""
+                                result = null
+                            }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = option)
                     }
                 }
             }
+        }
 
-            val (firstLabel, secondLabel) = when (selectedOption) {
-                stringResource(id = R.string.s) ->
-                    stringResource(id = R.string.speed) to stringResource(id = R.string.time)
+        Spacer(modifier = Modifier.height(16.dp))
 
-                stringResource(id = R.string.v) ->
-                    stringResource(id = R.string.distance) to stringResource(id = R.string.time)
+        val (firstLabel, secondLabel) = when (selectedOption) {
+            sLabel -> stringResource(id = R.string.speed) to stringResource(id = R.string.time)
+            vLabel -> stringResource(id = R.string.distance) to stringResource(id = R.string.time)
+            tLabel -> stringResource(id = R.string.distance) to stringResource(id = R.string.speed)
+            else -> "" to ""
+        }
 
-                stringResource(id = R.string.t) ->
-                    stringResource(id = R.string.distance) to stringResource(id = R.string.speed)
+        OutlinedTextField(
+            value = firstInput,
+            onValueChange = { firstInput = it },
+            label = { Text(firstLabel) },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
+        )
 
-                else -> "" to ""
-            }
+        Spacer(modifier = Modifier.height(8.dp))
 
-            OutlinedTextField(
-                value = firstInput,
-                onValueChange = { firstInput = it },
-                label = { Text(firstLabel) },
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
-            )
+        OutlinedTextField(
+            value = secondInput,
+            onValueChange = { secondInput = it },
+            label = { Text(secondLabel) },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
+        )
 
-            Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedTextField(
-                value = secondInput,
-                onValueChange = { secondInput = it },
-                label = { Text(secondLabel) },
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
+        Button(
+            onClick = {
+                val first = firstInput.toFloatOrNull() ?: 0f
+                val second = secondInput.toFloatOrNull() ?: 0f
+
+                result = when (selectedOption) {
+                    sLabel -> {
+                        val hasil = first * second
+                        String.format(resultTemplate, hasil)
+                    }
+
+                    vLabel -> {
+                        val hasil = first / second
+                        String.format(resultTemplate, hasil)
+                    }
+
+                    tLabel -> {
+                        val hasil = first / second
+                        String.format(resultTemplate, hasil)
+                    }
+
+                    else -> null
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = stringResource(id = R.string.count))
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        result?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         }
     }
+}
 
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
