@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">SpeedCalc</string>
     <string name="count">Count +1</string>
+    <string name="intro">SpeedCalc merupakan
+        aplikasi menghitung menggunakan rumus fisika yaitu
+        menghitung jarak dan waktu tempuh</string>
+    <string name="choose">Choose Variabel</string>
+    <string name="s">Distance</string>
+    <string name="v">Speed</string>
+    <string name="t">Time</string>
+    <string name="distance">Enter Value S</string>
+    <string name="speed">Enter Value V</string>
+    <string name="time">Enter Value T</string>
 </resources>
