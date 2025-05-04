@@ -15,8 +15,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -68,7 +71,9 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     )
     var selectedOption by remember { mutableStateOf(options[0]) }
     var firstInput by remember { mutableStateOf("") }
+    var firstInputError by remember { mutableStateOf(false) }
     var secondInput by remember { mutableStateOf("") }
+    var secondInputError by remember { mutableStateOf(false ) }
     var result by remember { mutableStateOf<String?>(null) }
 
 
@@ -154,12 +159,13 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = {
-                Text(
-                    text = getUnitFromLabel(firstLabel),
-                    style = MaterialTheme.typography.labelMedium
+                IconPicker(
+                    isError = firstInputError,
+                    unit = getUnitFromLabel(firstLabel)
                 )
             }
         )
+        ErrorHint(isError = firstInputError)
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -170,40 +176,47 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = {
-                Text(
-                    text = getUnitFromLabel(secondLabel),
-                    style = MaterialTheme.typography.labelMedium
+                IconPicker(
+                    isError = secondInputError,
+                    unit = getUnitFromLabel(secondLabel)
                 )
             }
         )
+        ErrorHint(isError = secondInputError)
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
+                firstInputError = (firstInput == "" || firstInput == "0")
+                secondInputError = ( secondInput == "" || secondInput == " 0")
+                if (firstInputError || secondInputError) return@Button
+
+
+
                 val first = firstInput.toFloatOrNull() ?: 0f
                 val second = secondInput.toFloatOrNull() ?: 0f
 
                 result = when (selectedOption) {
                     sLabel -> {
-                        val hasil = first * second
+                        val results = first * second
                         val unit = "m"
-                        val formattedHasil = String.format("%.2f", hasil)
-                        "Result: $formattedHasil $unit"
+                        val formattedResult = String.format("%.2f", results)
+                        "Result: $formattedResult $unit"
                     }
 
                     vLabel -> {
-                        val hasil = first / second
+                        val results = first / second
                         val unit = "m/s"
-                        val formattedHasil = String.format("%.2f", hasil)
-                        "Result: $formattedHasil $unit"
+                        val formattedResult = String.format("%.2f", results)
+                        "Result: $formattedResult $unit"
                     }
 
                     tLabel -> {
-                        val hasil = first / second
+                        val results = first / second
                         val unit = "s"
-                        val formattedHasil = String.format("%.2f", hasil)
-                        "Result: $formattedHasil $unit"
+                        val formattedResult= String.format("%.2f", results)
+                        "Result: $formattedResult $unit"
                     }
                     else -> null
                 }
@@ -224,6 +237,34 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         }
     }
 }
+@Composable
+fun IconPicker(isError: Boolean, unit: String) {
+    if (isError) {
+        Icon(
+            imageVector = Icons.Filled.Warning,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.error
+        )
+    } else {
+        Text(
+            text = unit,
+            style = MaterialTheme.typography.labelMedium
+        )
+    }
+}
+
+@Composable
+fun ErrorHint(isError: Boolean) {
+    if (isError) {
+        Text(
+            text = stringResource(R.string.invalid),
+            color = MaterialTheme.colorScheme.error,
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+}
+
+
 
 @Composable
 fun getUnitFromLabel(label: String): String {

@@ -13,4 +13,5 @@
     <string name="time">Enter Value T</string>
     <string name="result">Hasil: %1$.2f</string>
     <string name="invalid">Invalid Input</string>
+
 </resources>
