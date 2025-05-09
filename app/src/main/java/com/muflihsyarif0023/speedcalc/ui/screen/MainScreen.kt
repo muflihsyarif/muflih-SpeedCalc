@@ -1,10 +1,14 @@
 package com.muflihsyarif0023.speedcalc.ui.screen
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,11 +36,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -95,6 +99,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     var secondInput by rememberSaveable { mutableStateOf("") }
     var secondInputError by rememberSaveable { mutableStateOf(false ) }
     var result by rememberSaveable { mutableStateOf<String?>(null) }
+
 
 
     val sLabel = stringResource(id = R.string.s)
@@ -246,17 +251,49 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             Text(text = stringResource(id = R.string.count))
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
         result?.let {
             Text(
                 text = it,
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            val context = LocalContext.current
+            Button(
+                onClick = {
+                    shareData(
+                        context = context,
+                        message = it
+                    )
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = stringResource(R.string.share))
+            }
+        }
         }
     }
 }
+
+private fun shareData(context: Context, message: String) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    val chooser = Intent.createChooser(shareIntent, "Share via")
+    context.startActivity(chooser)
+}
+
+
+
+
 @Composable
 fun IconPicker(isError: Boolean, unit: String) {
     if (isError) {
@@ -295,6 +332,8 @@ fun getUnitFromLabel(label: String): String {
         else -> ""
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
