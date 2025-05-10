@@ -101,8 +101,6 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     var secondInputError by rememberSaveable { mutableStateOf(false ) }
     var result by rememberSaveable { mutableStateOf<String?>(null) }
 
-
-
     val sLabel = stringResource(id = R.string.s)
     val vLabel = stringResource(id = R.string.v)
     val tLabel = stringResource(id = R.string.t)
@@ -214,6 +212,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        val context = LocalContext.current
         Button(
             onClick = {
                 firstInputError = (firstInput == "" || firstInput == "0")
@@ -225,26 +224,20 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                 val first = firstInput.toFloatOrNull() ?: 0f
                 val second = secondInput.toFloatOrNull() ?: 0f
 
+
+
                 result = when (selectedOption) {
                     sLabel -> {
-                        val results = first * second
-                        val unit = "m"
-                        val formattedResult = String.format("%.2f", results)
-                        "Result: $formattedResult $unit"
+                        val hasil = first * second
+                        context.getString(R.string.result, hasil, "m")
                     }
-
                     vLabel -> {
-                        val results = first / second
-                        val unit = "m/s"
-                        val formattedResult = String.format("%.2f", results)
-                        "Result: $formattedResult $unit"
+                        val hasil = first / second
+                        context.getString(R.string.result, hasil, "m/s")
                     }
-
                     tLabel -> {
-                        val results = first / second
-                        val unit = "s"
-                        val formattedResult= String.format("%.2f", results)
-                        "Result: $formattedResult $unit"
+                        val hasil = first / second
+                        context.getString(R.string.result, hasil, "s")
                     }
                     else -> null
                 }
@@ -267,7 +260,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            val context = LocalContext.current
+
             Button(
                 onClick = {
                     shareData(
@@ -293,8 +286,6 @@ private fun shareData(context: Context, message: String) {
     val chooser = Intent.createChooser(shareIntent, "Share via")
     context.startActivity(chooser)
 }
-
-
 
 
 @Composable
@@ -325,7 +316,6 @@ fun ErrorHint(isError: Boolean) {
 }
 
 
-
 @Composable
 fun getUnitFromLabel(label: String): String {
     return when (label) {
@@ -335,8 +325,6 @@ fun getUnitFromLabel(label: String): String {
         else -> ""
     }
 }
-
-
 
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)

@@ -10,10 +10,9 @@
     <string name="distance">Enter Value S</string>
     <string name="speed">Enter Value V</string>
     <string name="time">Enter Value T</string>
-    <string name="result">Result: %1$.2f</string>
+    <string name="result">Result: %1$.2f %2$s</string>
     <string name="invalid">Invalid Input</string>
     <string name="about">about the application</string>
-    <string name="copyright">2025-2026 muflih</string>
     <string name="back">Back</string>
     <string name="share">Share</string>
     <string name="share_template">Option: %3$s, Input1: %1$s, Input2: %2$s</string>

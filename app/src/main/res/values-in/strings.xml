@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SpeedCalc</string>
+    <string name="count">Hitung</string>
+    <string name="intro">SpeedCalc adalah aplikasi yang digunakan untuk melakukan perhitungan menggunakan rumus fisika, khususnya untuk menghitung jarak, kecepatan, dan waktu.</string>
+    <string name="choose">Pilih Variable</string>
+    <string name="s">Jarak</string>
+    <string name="v">Kecepatan</string>
+    <string name="t">Waktu</string>
+    <string name="distance">Masukan Nilai S</string>
+    <string name="speed">Masukan Nilai V</string>
+    <string name="time">Masukan Nilai T</string>
+    <string name="result">Hasil: %1$.2f %2$s</string>
+    <string name="invalid">Input Tidak Valid</string>
+    <string name="about">Tentang Aplikasi</string>
+    <string name="back">Kembali</string>
+    <string name="share">Share</string>
+    <string name="share_template">Opsi: %3$s, Masukan1: %1$s, Masukan2: %2$s</string>
+    <string name="exsplain">Albert Einstein, fisikawan jenius dari Jerman, merevolusi pemahaman kita tentang alam semesta melalui teori relativitas dan
+        persamaan ikonik E = mc².\n\nKaryanya tidak hanya mengubah dunia fisika, tetapi juga membuka jalan bagi teknologi modern
+        serta pemahaman yang lebih dalam tentang ruang, waktu, dan energi.\n\nSebagai peraih Nobel dan pemikir humanis, Einstein
+        juga dikenang atas pandangannya tentang perdamaian, kebebasan, dan kemanusiaan, menjadikannya salah
+        satu tokoh paling berpengaruh dalam sejarah sains dan dunia.\n\nAplikasi ini dikembangkan untuk Assessment 1 mata kuliah Pemrograman Mobile.
+        Hak Cipta © 2024–2025 Muflih Syarif. Seluruh hak cipta dilindungi.</string>
+    <string name="image">Gambar</string>
+</resources>
