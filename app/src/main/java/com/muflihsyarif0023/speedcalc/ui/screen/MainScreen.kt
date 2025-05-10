@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Info
@@ -106,9 +107,11 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     val vLabel = stringResource(id = R.string.v)
     val tLabel = stringResource(id = R.string.t)
 
+    val scrollState = androidx.compose.foundation.rememberScrollState()
+
     Column(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize().verticalScroll(scrollState)
             .padding(16.dp)
     ) {
         Text(
