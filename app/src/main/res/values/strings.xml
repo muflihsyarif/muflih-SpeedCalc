@@ -10,13 +10,18 @@
     <string name="distance">Enter Value S</string>
     <string name="speed">Enter Value V</string>
     <string name="time">Enter Value T</string>
-    <string name="result">Hasil: %1$.2f</string>
+    <string name="result">Result: %1$.2f</string>
     <string name="invalid">Invalid Input</string>
     <string name="about">about the application</string>
     <string name="copyright">2025-2026 muflih</string>
     <string name="back">Back</string>
     <string name="share">Share</string>
     <string name="share_template">Option: %3$s, Input1: %1$s, Input2: %2$s</string>
+    <string name="exsplain">Albert Einstein, the brilliant physicist from Germany, revolutionized our understanding of the
+        universe through his theory of relativity and the iconic equation E = mc².\n\nHis work not only transformed physics but also paved the way for modern technology and
+        deeper insights into space, time, and energy.\n\nAs a Nobel laureate and humanist thinker, Einstein is also remembered for his views on peace,
+        freedom, and humanity, making him one of the most influential
+        figures in the history of science and the world.\n\nThis application was developed for Assessment 1 of the Mobile Programming course.\nCopyright © 2024–2025 Muflih Syarif.All rights reserved.</string>
 
 
 
